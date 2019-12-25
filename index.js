@@ -13,7 +13,7 @@ dotenv.config();
 
 //Connect DB
 mongoose.connect(
-    "mongodb+srv://sreilus:147896352@cluster0-jgfx4.mongodb.net/test?retryWrites=true&w=majority",
+    process.env.DB_CONNECT,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
