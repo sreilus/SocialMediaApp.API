@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const port = process.env.PORT || 3500;
+const port =  3500;
 
 //Import Routes
 const authRoute = require('./routes/auth');
