@@ -1,9 +1,12 @@
 const router = require('express').Router();
 const verify = require('./verifyToken');
+const StudentUser = require('../model/StudentUser');
 
-router.get('/',verify, (req,res) => {
 
-    res.send(req.user);
+router.get('/',verify,async (req,res) => {
+    const emailExist = await StudentUser.findOne({ _id: req.user._id });
+
+    res.send(emailExist);
 
 });
 
