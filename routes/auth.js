@@ -91,14 +91,14 @@ router.get('/:userId', async (req, res) => {
 
 //Get All Users
 router.get('/getUsers/get', async (req, res) => {
-    StudentUser.find({}, function(err, users) {
-        var userMap = {};
+    StudentUser.find({},function(err, users) {
+        // var userMap = {};
     
-        users.forEach(function(user) {
-          userMap[user._id] = user;
-        });
+        // users.forEach(function(user) {
+        //   userMap[user._id] = user;
+        // });
     
-        res.json(userMap);  
+        res.json(users);  
       });
 
 });
