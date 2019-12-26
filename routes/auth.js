@@ -84,15 +84,13 @@ router.post('/login', async (req, res) => {
 
 //Get User
 router.get('/:userId', async (req, res) => {
-
     const user = await StudentUser.findById(req.params.userId);
+    console.log(req.params.userId)
     res.json(user);
-
 });
 
 //Get All Users
-router.get('/getUsers', async (req, res) => {
-
+router.get('/getUsers/get', async (req, res) => {
     StudentUser.find({}, function(err, users) {
         var userMap = {};
     
