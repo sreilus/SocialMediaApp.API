@@ -90,6 +90,21 @@ router.get('/:userId', async (req, res) => {
 
 });
 
+//Get All Users
+router.get('/getUsers', async (req, res) => {
+
+    StudentUser.find({}, function(err, users) {
+        var userMap = {};
+    
+        users.forEach(function(user) {
+          userMap[user._id] = user;
+        });
+    
+        res.json(userMap);  
+      });
+
+});
+
 //Delete User
 router.delete('/:userId', async (req, res) => {
 
