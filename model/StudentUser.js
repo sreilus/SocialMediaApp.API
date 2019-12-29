@@ -6,25 +6,29 @@ const StudentUserSchema = new mongoose.Schema({
         type: String,
         required: true,
         min: 2,
-        max: 30
+        max: 30,
+        lowercase:true
     },
     surname: {
         type: String,
         min: 2,
-        max: 30
+        max: 30,
+        lowercase:true
     },
     username: {
         type: String,
         required: true,
         min: 2,
-        max: 15
+        max: 15,
+        lowercase:true
     },
     email: {
         type: String,
         required: true,
         min: 6,
         max: 100,
-        unique:1        
+        unique:1,
+        loadClass:true        
     },
     password: {
         type: String,

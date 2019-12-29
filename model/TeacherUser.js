@@ -5,23 +5,27 @@ const TeacherUserSchema = new mongoose.Schema({
         type: String,
         required: true,
         min: 2,
-        max: 20
+        max: 20,
+        lowercase:true
     },
     surname: {
         type: String,
         required: true,
         min: 2,
-        max: 20
+        max: 20,
+        lowercase:true
     },
     email: {
         type: String,
         required: true,
         min: 6,
         max: 100,
-        unique:1        
+        unique:1,
+        lowercase:true        
     },
     university: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'University',
         required: true,
         min: 6,
         max: 255        
@@ -38,7 +42,7 @@ const TeacherUserSchema = new mongoose.Schema({
     },
     userType: {
         type: Number,
-        default:1
+        default:2
     }
 });
 
