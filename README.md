@@ -1,2 +1,2 @@
 # SocialMediaApp.API
-Nodejs sosyal medya uygualamsı api'si
+Nodejs ile sosyal medya uygualaması api'si
