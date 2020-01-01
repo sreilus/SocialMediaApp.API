@@ -28,7 +28,7 @@ const StudentUserSchema = new mongoose.Schema({
         min: 6,
         max: 100,
         unique:1,
-        loadClass:true        
+        lowercase:true        
     },
     password: {
         type: String,

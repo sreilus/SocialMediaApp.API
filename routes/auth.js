@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const StudentUser = require('../model/StudentUser');
 const TeacherUser = require('../model/TeacherUser');
+const Room = require('../model/Room');
+const Message = require('../model/Message');
 const jwt = require('jsonwebtoken');
 const { registerStudentValidation, registerTeacherValidation, loginValidation } = require('../validations/validation');
 const bcrypt = require('bcryptjs');
@@ -12,7 +14,7 @@ router.post('/register', async (req, res) => {
         const { error } = registerStudentValidation(req.body);
         if (error) return res.status(400).send(error.details[0].message);
     }
-    else if(req.body.userType == 2){
+    else if (req.body.userType == 2) {
         const { error } = registerTeacherValidation(req.body);
         if (error) return res.status(400).send(error.details[0].message);
     }
@@ -46,7 +48,7 @@ router.post('/register', async (req, res) => {
         const teacherUser = new TeacherUser({
             name: req.body.name,
             email: req.body.email,
-            surname:req.body.surname,
+            surname: req.body.surname,
             university: req.body.university,
             password: hashedPassword,
             userType: req.body.userType
@@ -60,8 +62,6 @@ router.post('/register', async (req, res) => {
             res.status(400).send(err);
         }
     }
-
-
 });
 
 router.post('/login', async (req, res) => {
@@ -79,7 +79,7 @@ router.post('/login', async (req, res) => {
 
     //Create and assign a token
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).status(200).send({state:"succes", token:token});
+    res.header('auth-token', token).status(200).send({ state: "succes", token: token });
 });
 
 //Get User
@@ -91,16 +91,75 @@ router.get('/:userId', async (req, res) => {
 
 //Get All Users
 router.get('/getUsers/get', async (req, res) => {
-    StudentUser.find({},function(err, users) {
-        // var userMap = {};
-    
-        // users.forEach(function(user) {
-        //   userMap[user._id] = user;
-        // });
-    
-        res.json(users);  
-      });
+    StudentUser.find({}, function (err, users) {
+        res.json(users);
+    });
 
+});
+const roomName="room71"
+//Create Room
+router.get('/getUsers/room', async (req, res) => {
+    const newRoom = new Room({
+        name:roomName,
+        user1: {userId:"5e04e43b7ee8c38698b1dadd"},
+        user2:{userId:"5e09192c014ee13d50f35149"},
+        onModelUser1:'StudentUser',
+        onModelUser2:'TeacherUser'
+    });
+
+    try {
+        await newRoom.save();
+        res.send(newRoom);
+    }
+    catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+//Create Message
+router.get('/getUsers/msg', async (req, res) => {
+    const newMessage = new Message({
+        room:"5e09fae02cf1fe60f00dd3aa",
+        message_body:"yeni mesaj",
+        message_status:false,
+        sender: {userId:"5e04e43b7ee8c38698b1dadd"},
+        onModelUser:'StudentUser',        
+    });
+    try {
+        await newMessage.save();
+        res.send(newMessage);
+    }
+    catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+//Get All Users
+router.get('/getUsers/getTeacher', async (req, res) => {
+
+    Room.
+        findOne({ name: roomName }).
+        populate('user1.userId').
+        exec(function (err, story) {
+            if (err) return handleError(err);
+            console.log('The author is %s', story);
+            // prints "The author is Ian Fleming"
+            res.json(story.user1)
+        });
+});
+
+//Get the message
+router.get('/getUsers/getMsg', async (req, res) => {
+
+    Message.
+        findOne({ _id: "5e09fee2b8846225b47dcdca" }).
+        populate('room').
+        populate('sender.userId').
+        exec(function (err, story) {
+            if (err) return handleError(err);
+            console.log('The author is %s', story);
+            res.json(story)
+        });
 });
 
 //Delete User

@@ -25,7 +25,7 @@ const TeacherUserSchema = new mongoose.Schema({
     },
     university: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'University',
+        ref:'Universty',
         required: true,
         min: 6,
         max: 255        
