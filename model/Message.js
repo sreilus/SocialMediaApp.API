@@ -15,7 +15,7 @@ const MessageSchema = new mongoose.Schema({
         default:false
     },
     sender:{
-        userId: {type: mongoose.Schema.Types.ObjectId, refPath:'onModelUser'},
+         type: mongoose.Schema.Types.ObjectId, refPath:'onModelUser',
     },
     onModelUser: {
         type: String,

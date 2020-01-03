@@ -91,7 +91,7 @@ router.get('/:userId', async (req, res) => {
 
 //Get All Users
 router.get('/getUsers/get', async (req, res) => {
-    StudentUser.find({}, function (err, users) {
+    TeacherUser.find({}, function (err, users) {
         res.json(users);
     });
 
