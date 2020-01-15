@@ -9,6 +9,7 @@ const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
 const chatRoute = require('./routes/chat');
 const universitieRoute = require('./routes/universities');
+const uniChatRoute = require('./routes/uniChat');
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.use('/api/user', authRoute);
 app.use('/api/posts', postRoute);
 app.use('/api/chat',chatRoute);
 app.use('/api/universities', universitieRoute);
+app.use('api/unichat',uniChatRoute);
 
 app.listen(port, () => console.log('Server Up and running on ' + port));
 

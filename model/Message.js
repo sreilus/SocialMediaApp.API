@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const MessageSchema = new mongoose.Schema({
     room:{
-        type: mongoose.Schema.Types.ObjectId, ref:'Room'
+        type: mongoose.Schema.Types.ObjectId, refPath:'onModelRoom'
     },
     message_body: {
         type: String,
@@ -21,6 +21,11 @@ const MessageSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['StudentUser', 'TeacherUser']
+    },
+    onModelRoom: {
+        type: String,
+        required: true,
+        enum: ['Room', 'UniRoom','UniProgramRoom']
     },
     created_at:{
         type:Date,

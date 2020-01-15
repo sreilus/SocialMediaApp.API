@@ -70,8 +70,14 @@ router.post('/login', async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     //Checking if the email exists
-    const user = await StudentUser.findOne({ email: req.body.email });
-    if (!user) return res.status(400).send('Email is not found');
+    let user = await StudentUser.findOne({ email: req.body.email });
+    if (!user){
+        user =await TeacherUser.findOne({email:req.body.email});
+        if(!user)
+        {
+            return res.status(400).send('Email is not found');
+        }
+    }
 
     //PASSWORD CORRRECT
     const validPass = await bcrypt.compare(req.body.password, user.password);
@@ -84,19 +90,24 @@ router.post('/login', async (req, res) => {
 
 //Get User
 router.get('/:userId', async (req, res) => {
-    const user = await StudentUser.findById(req.params.userId);
+    let user = await StudentUser.findById(req.params.userId);
     console.log(req.params.userId)
+    if(!user)
+    {
+        user = await TeacherUser.findById(req.params.userId)
+    }
     res.json(user);
 });
 
 //Get All Users
 router.get('/getUsers/get', async (req, res) => {
+    console.log("girdi-getT");
     TeacherUser.find({}, function (err, users) {
         res.json(users);
     });
-
 });
 const roomName="room71"
+
 //Create Room
 router.get('/getUsers/room', async (req, res) => {
     const newRoom = new Room({

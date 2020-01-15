@@ -9,11 +9,13 @@ const RoomSchema = new mongoose.Schema({
         max: 255
     },
     user1:{
-        type: mongoose.Schema.Types.ObjectId, refPath:'onModelUser1'
+        type: mongoose.Schema.Types.ObjectId, refPath:'onModelUser1',
+        require:true,
     },
     user2:
     {
         type: mongoose.Schema.Types.ObjectId,refPath:'onModelUser2',
+        required:true,
     },
     onModelUser1: {
         type: String,

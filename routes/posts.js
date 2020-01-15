@@ -5,7 +5,11 @@ const verify = require('./verifyToken');
 
 router.get('/', verify, async (req, res) => {
     let userId = (req.user._id);
-    const user = await StudentUser.findById(userId);
+    let user = await StudentUser.findById(userId);
+    if(!user)
+    {
+        user = await TeacherUser.findById(userId);
+    }
     res.send(user);
 });
 
